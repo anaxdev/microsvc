@@ -60,7 +60,7 @@ aws_secret_access_key = <secret_key>
 
 Install `ansible` and `terraform` plugins in `Jenkins -> Manage Plugins -> Available`.
 
-Confirm the installation directory for ansible/terraform binaries inside Jenkins server. Then set the tool name and the installation directory under Ansible/Terraform  in `Jenkins -> Global Tool Configuration`.
+Confirm the installation directory for ansible/terraform binaries inside Jenkins server. Then set the tool name and the installation directory under Ansible/Terraform  in `Jenkins -> Manage Plugins -> Global Tool Configuration`.
 
 ### Create a pipeline 
 

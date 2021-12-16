@@ -4,7 +4,7 @@ pipeline {
     terraform 'terraform'
   }
   parameters {
-    string(name: 'EC2_INSTANCE_NAME', defaultValue: 'ubuntu', description: 'Name for AWS EC2 Instance')
+    string(name: 'EC2_INSTANCE_NAME', defaultValue: 'backend', description: 'Name for AWS EC2 Instance')
     string(name: 'NAME_PREFIX', defaultValue: 'demo', description: 'The prefix for the name of AWS resources such as VPC, Subnet, Security Group, etc.')
   }
   stages {
