@@ -1,0 +1,127 @@
+---
+- name: Install & Configure the server
+  hosts: all
+  become: true
+  vars:
+    USER: "ubuntu"
+    DOCKER_COMPOSE_VERSION: "1.29.2"
+  tasks:
+    - name: Update all packages
+      apt:
+        upgrade: dist
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install dependency packages for Docker
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - software-properties-common
+        - lsb-release
+
+    # Install Docker
+    - name: Add GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    
+    - name: Get system codename
+      shell: "lsb_release -cs"
+      args:
+        executable: /bin/sh
+      register: sys_codename
+
+    - name: Get system codename
+      shell: "lsb_release -cs"
+      args:
+        executable: /bin/sh
+      register: sys_codename
+
+    - name: Get architecture
+      shell: "dpkg --print-architecture"
+      args:
+        executable: /bin/sh
+      register: sys_arch
+
+    - name: Add docker repository to apt
+      apt_repository:
+        repo: deb [arch={{sys_arch.stdout}}] https://download.docker.com/linux/ubuntu {{sys_codename.stdout}} stable
+        state: present
+
+    - name: Install docker
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Make sure that docker started
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Test Docker with hello-world container
+      shell: "docker run hello-world"
+      register: hello_world_output
+
+    - name: Show output of hello word example
+      debug:
+        msg: "Container Output: {{hello_world_output.stdout}}"
+
+    # Add this user to docker group
+    - name: Create docker group
+      group:
+        name: "docker"
+        state: present
+
+    - name: Adding user {{ USER }} to docker group
+      user:
+        name: "{{ USER }}"
+        groups: "docker"
+        append: "yes"
+
+    # Install docker-compose
+    - name: Get kernel name
+      shell: "uname -s"
+      args:
+        executable: /bin/sh
+      register: sys_kernel
+
+    - name: Get hardware name
+      shell: "uname -m"
+      args:
+        executable: /bin/sh
+      register: sys_hardware
+
+    - name: Install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-{{sys_kernel.stdout}}-{{sys_hardware.stdout}}
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Install Docker SDK for Python
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - python3
+        - python3-pip
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: "docker<5"
+
+    - name: Install docker-compose SDK for Python
+      pip:
+        name: "docker-compose"

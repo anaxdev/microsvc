@@ -1,0 +1,26 @@
+---
+- name: Deploy Backend API
+  hosts: backend
+  vars:
+    DEPLOY_DIR: "/home/ubuntu/backend"
+  tasks:
+    - name: Create the deployment directory
+      file:
+        path: "{{ DEPLOY_DIR }}"
+        state: directory
+
+    - name: Copy .env
+      copy:
+        src: ../node-app/.env
+        dest: "{{ DEPLOY_DIR }}/.env"
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: ../node-app/docker-compose.yml
+        dest: "{{ DEPLOY_DIR }}/docker-compose.yml"
+
+    - name: docker-compose up
+      docker_compose:
+        project_src: "{{ DEPLOY_DIR }}"
+        build: no
+        pull: yes
