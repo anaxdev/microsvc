@@ -37,7 +37,7 @@ pipeline {
         ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/inventory.yml', playbook: 'ansible/deploy-backend.yml'
       }
     }
-    stage('Backend Address') {
+    stage('Backend Url') {
       steps {
         dir('terraform') {
           sh 'echo Backend Url = http://$(terraform output --raw server_ip)'

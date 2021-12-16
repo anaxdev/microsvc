@@ -70,4 +70,4 @@ Once a Pipeline job created, please build it. It will provision an AWS EC2 serve
 
 ## Check Backend endpoint.
 
-The final stage of the pipeline (`Backend Address`) should output the backend url. Then open it on web browser.
+The final stage `Backend Url` of the pipeline should show the backend url. Then open it on web browser.
