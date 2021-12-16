@@ -66,3 +66,8 @@ Create a Pipeline job (`New Item -> Pipeline`) and set [Jenkinsfile](Jenkinsfile
 
 ![image](https://user-images.githubusercontent.com/26896535/146295221-cdfe3c8b-b3dd-42c6-b8c4-21344468fc19.png)
 
+Once a Pipeline job created, please build it. It will provision an AWS EC2 server and install everything, finally deploy the backend service.
+
+## Check Backend endpoint.
+
+The final stage of the pipeline (`Backend Address`) should output the backend url. Then open it on web browser.
