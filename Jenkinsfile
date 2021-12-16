@@ -9,11 +9,11 @@ pipeline {
   }
   stages {
     // Git Checkout
-    stage('SCM') {
-      steps {
-        git branch: 'main', url: 'https://github.com/anaxdev/microsvc.git'
-      }
-    }
+    // stage('SCM') {
+    //   steps {
+    //     git branch: 'main', url: 'https://github.com/anaxdev/microsvc.git'
+    //   }
+    // }
     // Run Terraform scripts
     stage('Server Provision') {
       steps {
