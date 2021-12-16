@@ -1,15 +1,15 @@
 version: '3'
 services:
-  nginx:
+  backend:
     build: .
     image: anadk/backend-demo
     container_name: backend
     networks:
-      - backend-network
+      - demo-net
     ports:
       - "80:3000"
     environment:
       ENV_MODE: ${ENV_MODE}
 networks:
-  backend-network:
-    driver: bridge
+  demo-net:
+    name: demo-net
