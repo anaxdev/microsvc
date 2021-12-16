@@ -52,8 +52,17 @@ aws_access_key_id = <access_key>
 aws_secret_access_key = <secret_key>
 ```
 
-## Create a Jenkins job
+## Configure Jenkins
 
-Please install `ansible` and `terraform` plugins in Jenkins page.
+### Setup Ansible and Terraform tools
 
-Create a pipeline job and configure Jenkinsfile.
+Install `ansible` and `terraform` plugins in `Jenkins -> Manage Plugins -> Available`.
+
+Confirm the installation directory for ansible/terraform binaries inside Jenkins server. Then set the tool name and the installation directory under Ansible/Terraform  in `Jenkins -> Global Tool Configuration -> Available`.
+
+### Create a pipeline 
+
+Create a Pipeline job (`New Item -> Pipeline`) and set [Jenkinsfile](Jenkinsfile) under `Pipeline script from SCM`.
+
+![image](https://user-images.githubusercontent.com/26896535/146295221-cdfe3c8b-b3dd-42c6-b8c4-21344468fc19.png)
+
